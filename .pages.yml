@@ -1,0 +1,65 @@
+media:
+  input: media
+  output: /media
+
+content:
+  - name: catalog
+    label: Каталог платьев
+    type: file
+    path: content/catalog.json
+    format: json
+    fields:
+      - name: site
+        label: Настройки сайта
+        type: object
+        fields:
+          - name: heroImage
+            label: Главное фото
+            type: image
+          - name: heroVideo
+            label: Главное видео
+            type: file
+          - name: extraNote
+            label: Текст под каталогом
+            type: string
+          - name: bookingUrl
+            label: Ссылка для записи
+            type: string
+      - name: dresses
+        label: Платья
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name} — {price} €"
+        fields:
+          - name: name
+            label: Название модели
+            type: string
+            required: true
+          - name: slug
+            label: Адрес страницы латиницей
+            type: string
+            required: true
+          - name: category
+            label: Категория
+            type: string
+          - name: price
+            label: Цена в евро
+            type: number
+            required: true
+          - name: description
+            label: Краткое описание
+            type: string
+          - name: longDescription
+            label: Полное описание
+            type: text
+          - name: image
+            label: Фото платья
+            type: image
+          - name: published
+            label: Показывать на сайте
+            type: boolean
+          - name: featured
+            label: Избранная модель
+            type: boolean
