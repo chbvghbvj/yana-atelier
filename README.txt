@@ -1,0 +1,1 @@
+CMS-connected Yana Atelier static site. Upload the files in this folder to the root of the existing GitHub repository, replacing index.html and adding dress.html and content/catalog.json. The existing .pages.yml should remain unchanged. The homepage reads content/catalog.json and displays published dresses.
