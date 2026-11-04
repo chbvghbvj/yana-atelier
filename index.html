@@ -24,7 +24,7 @@
 </main><footer class="footer"><a class="brand" href="#top">Yana Atelier</a><span>Пловдив, България</span><span>© 2026</span></footer>
 <script>
 (async function(){
-  const base = '/yana-atelier/';
+  const base = location.pathname.startsWith('/yana-atelier/') ? '/yana-atelier/' : '/';
   const asset = path => {
     if (!path) return '';
     return path.startsWith('/')
