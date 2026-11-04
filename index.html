@@ -14,79 +14,10 @@
 <body>
 <header class="nav"><a class="brand" href="#top">Yana Atelier</a><nav class="navlinks"><a href="#collection">Колекция</a><a href="#atelier">Ателието</a><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Запиши час ↗</a></nav></header>
 <main id="top">
-<section class="hero"><div class="hero-copy"><div class="eyebrow">Пловдив · Индивидуален дизайн</div><h1>Роклята,<br>която е <em>твоя.</em></h1><p class="intro">Вечерни и абитуриентски рокли, създадени по твоите мерки. Силует, детайл и движение — с внимание към всяка линия.</p><a class="cta" href="#collection">Разгледай колекцията</a></div><div class="hero-image" id="heroMedia"><div class="placeholder">Yana Atelier</div></div></section>
+<section class="hero"><div class="hero-copy"><div class="eyebrow">Пловдив · Индивидуален дизайн</div><h1>Роклята,<br>която е <em>твоя.</em></h1><p class="intro">Вечерни и абитуриентски рокли, създадени по твоите мерки. Силует, детайл и движение — с внимание към всяка линия.</p><a class="cta" href="#collection">Разгледай колекцията</a></div><div class="hero-image" id="heroMedia"><img src="media/hf_20261103_151821_ee135b38-57e1-461d-8a06-3f6a531381bc-1.png" alt="Yana Atelier — Сияна"></div></section>
 <section class="section" id="collection"><div class="section-head"><div><div class="eyebrow">Подбрани модели</div><h2>Колекция</h2></div><div class="section-note">Индивидуална изработка</div></div>
-<div class="category-filter" id="categoryFilter" aria-label="Категории рокли"><button type="button" data-category="all" aria-pressed="true">Всички рокли</button><button type="button" data-category="short" aria-pressed="false">Коктейлни рокли</button><button type="button" data-category="prom" aria-pressed="false">Официални рокли</button></div><div class="grid" id="dressGrid">
-<a class="product-card" href="siyana.html"><div class="product-image placeholder">Снимка на<br>„Сияна“</div><div class="product-info"><div><div class="product-name">Сияна</div><div class="product-meta">Вечерна рокля · По поръчка<br><span class="view-link">Разгледай модела ↗</span></div></div><div class="price">416 €</div></div></a>
-<a class="product-card" href="kameliya.html"><div class="product-image placeholder">Снимка на<br>„Камелия“</div><div class="product-info"><div><div class="product-name">Камелия</div><div class="product-meta">Вечерна рокля · По поръчка<br><span class="view-link">Разгледай модела ↗</span></div></div><div class="price">430 €</div></div></a>
-</div><p class="section-note">Допълнителна панделка към модел „Сияна“ — 100 €.</p></section>
+<div class="category-filter" id="categoryFilter" aria-label="Категории рокли"><button type="button" data-category="all" aria-pressed="true">Всички рокли</button><button type="button" data-category="short" aria-pressed="false">Коктейлни рокли</button><button type="button" data-category="prom" aria-pressed="false">Официални рокли</button></div><div class="grid" id="dressGrid"><a class="product-card" data-categories="prom short" href="dress.html?slug=siyana"><div class="product-image"><img src="media/hf_20261103_151821_ee135b38-57e1-461d-8a06-3f6a531381bc-1.png" alt="Сияна" loading="lazy"></div><div class="product-info"><div><div class="product-name">Сияна</div><div class="product-meta">Вечерна рокля · По поръчка<br><span class="view-link">Разгледай модела ↗</span></div></div><div class="price">416 €</div></div></a><a class="product-card" data-categories="prom" href="dress.html?slug=kameliya"><div class="product-image placeholder">Камелия</div><div class="product-info"><div><div class="product-name">Камелия</div><div class="product-meta">Вечерна рокля · По поръчка<br><span class="view-link">Разгледай модела ↗</span></div></div><div class="price">430 €</div></div></a></div><p class="section-note">Допълнителна панделка към модел „Сияна“ — 100 €.</p></section>
 <section class="section about" id="atelier"><div><div class="eyebrow">Yana Atelier · Plovdiv</div><h2>Създадена<br>за твоя момент.</h2></div><div><p>В Yana Atelier всяка рокля се изработва индивидуално — с внимание към пропорциите, материалите и детайлите. За абитуриентски бал, специална вечер или събитие, което заслужава нещо лично.</p><a class="cta" href="https://www.instagram.com/" target="_blank" rel="noreferrer">Запиши час за консултация</a></div></section>
 </main><footer class="footer"><a class="brand" href="#top">Yana Atelier</a><span>Пловдив, България</span><span>© 2026</span></footer>
-<script>
-(async function () {
-  const base = location.pathname.startsWith('/yana-atelier/') ? '/yana-atelier/' : '/';
-  const asset = path => {
-    if (!path) return '';
-    if (/^https?:\/\//i.test(path)) return path;
-    return base + path.replace(/^\/+/, '');
-  };
-  const grid = document.getElementById('dressGrid');
-  const hero = document.getElementById('heroMedia');
-  const filter = document.getElementById('categoryFilter');
-
-  try {
-    const response = await fetch(base + 'content/catalog.json', { cache: 'no-store' });
-    if (!response.ok) throw new Error('Catalog HTTP ' + response.status);
-    const data = await response.json();
-    const site = data.site || {};
-    const dresses = (data.dresses || []).filter(d => d.published !== false);
-
-    if (site.heroImage) {
-      hero.innerHTML = '<img src="' + asset(site.heroImage) + '" alt="Yana Atelier">';
-    } else if (site.heroVideo) {
-      hero.innerHTML = '<video src="' + asset(site.heroVideo) + '" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain"></video>';
-    } else {
-      const featured = dresses.find(d => d.featured && d.image) || dresses.find(d => d.image);
-      if (featured) hero.innerHTML = '<img src="' + asset(featured.image) + '" alt="Yana Atelier — ' + (featured.name || 'Колекция') + '">';
-    }
-
-    let activeCategory = 'all';
-    function renderDresses() {
-      const visible = dresses.filter(d => activeCategory === 'all' || (d.categories || []).includes(activeCategory));
-      grid.innerHTML = visible.map(d => {
-        const image = d.image
-          ? '<img src="' + asset(d.image) + '" alt="' + (d.name || 'Рокля') + '" loading="lazy">'
-          : '<div class="placeholder">Снимка на<br>„' + (d.name || 'модела') + '“</div>';
-        return '<a class="product-card" href="' + base + 'dress.html?slug=' + encodeURIComponent(d.slug || '') + '">' +
-          '<div class="product-image">' + image + '</div>' +
-          '<div class="product-info"><div><div class="product-name">' + (d.name || '') + '</div>' +
-          '<div class="product-meta">' + (d.category || 'Вечерна рокля') + ' · По поръчка<br><span class="view-link">Разгледай модела ↗</span></div></div>' +
-          '<div class="price">' + (d.price ?? '') + ' €</div></div></a>';
-      }).join('');
-      if (!visible.length) grid.innerHTML = '<p class="section-note">Моделите в тази категория скоро ще бъдат добавени.</p>';
-    }
-
-    filter.addEventListener('click', function (event) {
-      const button = event.target.closest('button[data-category]');
-      if (!button) return;
-      activeCategory = button.dataset.category;
-      filter.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
-      renderDresses();
-    });
-    renderDresses();
-
-    if (site.extraNote) {
-      const note = document.querySelector('#collection .section-note:last-of-type');
-      if (note) note.textContent = site.extraNote;
-    }
-    if (site.bookingUrl) {
-      document.querySelectorAll('a.cta').forEach(a => {
-        if (a.textContent.includes('Запиши')) a.href = site.bookingUrl;
-      });
-    }
-  } catch (error) {
-    console.error('Catalog not loaded:', error);
-  }
-})();
-</script>
+<script>(function(){var buttons=document.querySelectorAll("#categoryFilter button");var cards=document.querySelectorAll("#dressGrid .product-card");buttons.forEach(function(button){button.addEventListener("click",function(){var category=button.getAttribute("data-category");buttons.forEach(function(b){b.setAttribute("aria-pressed",String(b===button));});cards.forEach(function(card){var categories=(card.getAttribute("data-categories")||"").split(" ");card.hidden=category!=="all"&&!categories.includes(category);});});});})();</script>
 </body></html>
