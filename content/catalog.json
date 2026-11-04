@@ -16,11 +16,7 @@
         "/media/sp102999.jpg"
       ],
       "published": true,
-      "featured": true,
-      "categories": [
-        "prom",
-        "short"
-      ]
+      "featured": true
     },
     {
       "name": "Камелия",
@@ -29,11 +25,9 @@
       "price": 430,
       "description": "Рокля, създадена индивидуално по твоите мерки. За специална вечер или събитие.",
       "longDescription": "Индивидуално изработена вечерна рокля от Yana Atelier, Пловдив. Изработка по поръчка и индивидуално напасване.",
+      "image": "/media/Изображение от ChatGPT 3.11.2026 г., 16_41_14.jpg",
       "published": true,
-      "featured": true,
-      "categories": [
-        "prom"
-      ]
+      "featured": true
     }
   ]
 }
