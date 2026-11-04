@@ -13,15 +13,6 @@ content:
         label: Настройки сайта
         type: object
         fields:
-          - name: heroImage
-            label: Главное фото
-            type: image
-          - name: heroVideo
-            label: Главное видео
-            type: file
-          - name: extraNote
-            label: Текст под каталогом
-            type: string
           - name: bookingUrl
             label: Ссылка для записи
             type: string
@@ -38,7 +29,7 @@ content:
             type: string
             required: true
           - name: slug
-            label: Адрес страницы (латиницей)
+            label: Ссылка модели (латиницей)
             type: string
             required: true
           - name: category
@@ -55,17 +46,15 @@ content:
             label: Полное описание
             type: text
           - name: image
-            label: Фото платья
+            label: Главное фото
             type: image
           - name: gallery
-            label: Галерея — до 5 фото
+            label: Дополнительные фото (до 2)
             type: image
             options:
               multiple:
-                max: 5
+                max: 2
               unique: true
-              extensions: [jpg, jpeg, png, webp]
-              rename: safe
           - name: published
             label: Показывать на сайте
             type: boolean
