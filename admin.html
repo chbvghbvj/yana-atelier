@@ -20,8 +20,9 @@
 <label>Главное фото</label><input id="image" type="file" accept="image/*">
 <label>Дополнительные фото (можно несколько)</label><input id="gallery" type="file" accept="image/*" multiple>
 <div id="previews"></div><button id="save">Сохранить платье</button><button class="secondary" id="publish">Опубликовать / скрыть</button>
-<div class="status" id="status">Подключи каталог, чтобы начать.</div>
-</div></main>
+</div>
+<div class="status" id="status">Вставь GitHub token и нажми «Подключить каталог».</div>
+</main>
 <script>
 const owner="chbvghbvj",repo="yana-atelier",branch="main";let token=sessionStorage.getItem("yana_admin_token")||"",catalog=null,sha=null,current=-1;
 const $=id=>document.getElementById(id),msg=t=>$("status").textContent=t;
