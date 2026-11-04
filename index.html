@@ -23,11 +23,12 @@
 <section class="section about" id="atelier"><div><div class="eyebrow">Yana Atelier · Plovdiv</div><h2>Създадена<br>за твоя момент.</h2></div><div><p>В Yana Atelier всяка рокля се изработва индивидуално — с внимание към пропорциите, материалите и детайлите. За абитуриентски бал, специална вечер или събитие, което заслужава нещо лично.</p><a class="cta" href="https://www.instagram.com/" target="_blank" rel="noreferrer">Запиши час за консултация</a></div></section>
 </main><footer class="footer"><a class="brand" href="#top">Yana Atelier</a><span>Пловдив, България</span><span>© 2026</span></footer>
 <script>
-(async function(){
+(async function () {
   const base = location.pathname.startsWith('/yana-atelier/') ? '/yana-atelier/' : '/';
   const asset = path => {
     if (!path) return '';
-    return path.startsWith('/') ? base + path.replace(/^\\/+/, '') : path;
+    if (/^https?:\/\//i.test(path)) return path;
+    return base + path.replace(/^\/+/, '');
   };
   const grid = document.getElementById('dressGrid');
   const hero = document.getElementById('heroMedia');
@@ -35,50 +36,43 @@
 
   try {
     const response = await fetch(base + 'content/catalog.json', { cache: 'no-store' });
-    if (!response.ok) throw new Error('Catalog not found');
+    if (!response.ok) throw new Error('Catalog HTTP ' + response.status);
     const data = await response.json();
     const site = data.site || {};
+    const dresses = (data.dresses || []).filter(d => d.published !== false);
 
     if (site.heroImage) {
-      hero.innerHTML = `<img src="${asset(site.heroImage)}" alt="Yana Atelier">`;
+      hero.innerHTML = '<img src="' + asset(site.heroImage) + '" alt="Yana Atelier">';
     } else if (site.heroVideo) {
-      hero.innerHTML = `<video src="${asset(site.heroVideo)}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain"></video>`;
+      hero.innerHTML = '<video src="' + asset(site.heroVideo) + '" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain"></video>';
     } else {
-      const featured = (data.dresses || []).find(d => d.featured && d.image) || (data.dresses || []).find(d => d.image);
-      if (featured) hero.innerHTML = `<img src="${asset(featured.image)}" alt="Yana Atelier — ${featured.name || 'Колекция'}">`;
+      const featured = dresses.find(d => d.featured && d.image) || dresses.find(d => d.image);
+      if (featured) hero.innerHTML = '<img src="' + asset(featured.image) + '" alt="Yana Atelier — ' + (featured.name || 'Колекция') + '">';
     }
 
-    const dresses = (data.dresses || []).filter(d => d.published !== false);
     let activeCategory = 'all';
-
     function renderDresses() {
       const visible = dresses.filter(d => activeCategory === 'all' || (d.categories || []).includes(activeCategory));
       grid.innerHTML = visible.map(d => {
         const image = d.image
-          ? `<img src="${asset(d.image)}" alt="${d.name || 'Рокля'}" loading="lazy">`
-          : `<div class="placeholder">Снимка на<br>„${d.name || 'модела'}“</div>`;
-        return `<a class="product-card" href="${base}dress.html?slug=${encodeURIComponent(d.slug || '')}">
-          <div class="product-image">${image}</div>
-          <div class="product-info">
-            <div>
-              <div class="product-name">${d.name || ''}</div>
-              <div class="product-meta">${d.category || 'Вечерна рокля'} · По поръчка<br><span class="view-link">Разгледай модела ↗</span></div>
-            </div>
-            <div class="price">${d.price ?? ''} €</div>
-          </div>
-        </a>`;
+          ? '<img src="' + asset(d.image) + '" alt="' + (d.name || 'Рокля') + '" loading="lazy">'
+          : '<div class="placeholder">Снимка на<br>„' + (d.name || 'модела') + '“</div>';
+        return '<a class="product-card" href="' + base + 'dress.html?slug=' + encodeURIComponent(d.slug || '') + '">' +
+          '<div class="product-image">' + image + '</div>' +
+          '<div class="product-info"><div><div class="product-name">' + (d.name || '') + '</div>' +
+          '<div class="product-meta">' + (d.category || 'Вечерна рокля') + ' · По поръчка<br><span class="view-link">Разгледай модела ↗</span></div></div>' +
+          '<div class="price">' + (d.price ?? '') + ' €</div></div></a>';
       }).join('');
       if (!visible.length) grid.innerHTML = '<p class="section-note">Моделите в тази категория скоро ще бъдат добавени.</p>';
     }
 
-    filter.addEventListener('click', event => {
+    filter.addEventListener('click', function (event) {
       const button = event.target.closest('button[data-category]');
       if (!button) return;
       activeCategory = button.dataset.category;
       filter.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
       renderDresses();
     });
-
     renderDresses();
 
     if (site.extraNote) {
@@ -90,8 +84,8 @@
         if (a.textContent.includes('Запиши')) a.href = site.bookingUrl;
       });
     }
-  } catch (e) {
-    console.warn('Catalog not loaded:', e);
+  } catch (error) {
+    console.error('Catalog not loaded:', error);
   }
 })();
 </script>
