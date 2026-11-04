@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yana Atelier — управление каталогом</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f7f5f1;color:#171614;font:15px system-ui,sans-serif}main{max-width:760px;margin:32px auto;padding:24px}h1{font:32px Georgia;margin:0 0 8px}p{color:#777}label{display:block;margin:16px 0 6px;font-size:13px}input,textarea,select{width:100%;padding:12px;border:1px solid #d9d5ce;background:white;font:inherit;border-radius:4px}textarea{min-height:90px}button{border:0;background:#171614;color:white;padding:13px 18px;margin:14px 8px 0 0;cursor:pointer}button.secondary{background:#9b8067}.card{border:1px solid #d9d5ce;padding:20px;margin:20px 0;background:white}.hidden{display:none}.status{padding:12px;background:#e9e4dc;margin-top:16px;white-space:pre-wrap}.small{font-size:12px}img.preview{width:90px;height:110px;object-fit:cover;margin:6px}
+</style><main>
+<h1>Yana Atelier</h1><p>Управление каталогом платьев</p>
+<div class="card" id="auth">
+<label>GitHub access token</label><input id="token" type="password" autocomplete="off" placeholder="Вставь временный токен GitHub">
+<p class="small">Нужен fine-grained token только для репозитория yana-atelier с правом Contents: Read and write. Токен хранится только в этой вкладке и не отправляется никому, кроме GitHub.</p><button id="connect">Подключить каталог</button>
+</div>
+<div id="editor" class="hidden">
+<label>Выбрать платье</label><select id="dress"></select><button class="secondary" id="new">＋ Новое платье</button>
+<label>Название</label><input id="name">
+<label>URL-имя (латиницей)</label><input id="slug">
+<label>Категория</label><input id="category" value="Вечерна рокля">
+<label>Цена (€)</label><input id="price" type="number">
+<label>Краткое описание</label><textarea id="description"></textarea>
+<label>Полное описание</label><textarea id="longDescription"></textarea>
+<label>Главное фото</label><input id="image" type="file" accept="image/*">
+<label>Дополнительные фото (можно несколько)</label><input id="gallery" type="file" accept="image/*" multiple>
+<div id="previews"></div><button id="save">Сохранить платье</button><button class="secondary" id="publish">Опубликовать / скрыть</button>
+<div class="status" id="status">Подключи каталог, чтобы начать.</div>
+</div></main>
+<script>
+const owner="chbvghbvj",repo="yana-atelier",branch="main";let token="",catalog=null,sha=null,current=-1;
+const $=id=>document.getElementById(id),msg=t=>$("status").textContent=t;
+async function api(path,opts={}){let r=await fetch("https://api.github.com/repos/"+owner+"/"+repo+"/contents/"+path,{...opts,headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json",...(opts.headers||{})}});let j=await r.json();if(!r.ok)throw Error(j.message||r.status);return j}
+async function readCatalog(){let j=await api("content/catalog.json");sha=j.sha;catalog=JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,"")))));renderSelect()}
+function renderSelect(){ $("dress").innerHTML='<option value="-1">＋ Новое платье</option>'+catalog.dresses.map((d,i)=>'<option value="'+i+'">'+esc(d.name)+'</option>').join("");}
+function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function load(i){current=Number(i);let d=catalog.dresses[current]||{};["name","slug","category","price","description","longDescription"].forEach(k=>$(k).value=d[k]||"");$("image").value="";$("gallery").value="";$("previews").innerHTML=(d.image?'<img class="preview" src="'+esc(d.image)+'">':"")+(d.gallery||[]).map(u=>'<img class="preview" src="'+esc(u)+'">').join("")}
+$("connect").onclick=async()=>{token=$("token").value.trim();try{await readCatalog();$("auth").classList.add("hidden");$("editor").classList.remove("hidden");load(-1);msg("Каталог подключён. Выбери платье или создай новое.")}catch(e){msg("Не удалось подключиться: "+e.message)}};
+$("dress").onchange=()=>load($("dress").value);$("new").onclick=()=>{load(-1);$("dress").value="-1"};
+async function upload(file){let safe=file.name.normalize("NFKD").replace(/[^a-zA-Z0-9._-]+/g,"-").replace(/^-+|-+$/g,"");let path="media/"+Date.now()+"-"+safe;let b64=await new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(r.result.split(",")[1]);r.onerror=reject;r.readAsDataURL(file)});await api(path,{method:"PUT",body:JSON.stringify({message:"Upload catalog image",content:b64,branch})});return "/media/"+encodeURIComponent(path.split("/").pop())}
+$("save").onclick=async()=>{try{msg("Сохраняю фотографии…");let d=current>=0?catalog.dresses[current]:{published:true,featured:false};["name","slug","category","description","longDescription"].forEach(k=>d[k]=$(k).value.trim());d.price=Number($("price").value)||0;
+if($("image").files[0])d.image=await upload($("image").files[0]);if($("gallery").files.length){d.gallery=d.gallery||[];for(let f of $("gallery").files)d.gallery.push(await upload(f))}
+if(current<0){catalog.dresses.push(d);current=catalog.dresses.length-1}
+msg("Сохраняю каталог…");let body=btoa(unescape(encodeURIComponent(JSON.stringify(catalog,null,2))));let result=await api("content/catalog.json",{method:"PUT",body:JSON.stringify({message:"Update dress catalog",content:body,sha,branch})});sha=result.content.sha;renderSelect();$("dress").value=String(current);msg("Готово! Изменения сохранены. Сайт обновится после сборки GitHub Pages.")}catch(e){msg("Ошибка: "+e.message)}};
+$("publish").onclick=async()=>{if(current<0)return;catalog.dresses[current].published=!catalog.dresses[current].published;try{let body=btoa(unescape(encodeURIComponent(JSON.stringify(catalog,null,2))));let r=await api("content/catalog.json",{method:"PUT",body:JSON.stringify({message:"Change dress visibility",content:body,sha,branch})});sha=r.content.sha;msg(catalog.dresses[current].published?"Платье опубликовано.":"Платье скрыто.");}catch(e){msg(e.message)}};
+</script>
