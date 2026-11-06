@@ -41,6 +41,7 @@ test('dress photos use a horizontal carousel with working pagination dots', asyn
   await expect(dots.nth(2)).toHaveAttribute('aria-current', 'true');
 
   await dots.nth(0).click();
+  await expect.poll(() => track.evaluate(el => Math.round(el.scrollLeft / el.clientWidth))).toBe(0);
   const cdp = await page.context().newCDPSession(page);
   await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 1 });
   const rect = await track.evaluate(el => {
@@ -48,14 +49,12 @@ test('dress photos use a horizontal carousel with working pagination dots', asyn
     return { left: r.left, top: r.top, width: r.width, height: r.height };
   });
   const y = rect.top + rect.height / 2;
-  await cdp.send('Input.dispatchTouchEvent', {
-    type: 'touchStart',
-    touchPoints: [{ x: rect.left + rect.width * 0.8, y }]
-  });
-  await cdp.send('Input.dispatchTouchEvent', {
-    type: 'touchMove',
-    touchPoints: [{ x: rect.left + rect.width * 0.2, y }]
-  });
+  const xAt = fraction => rect.left + rect.width * fraction;
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: xAt(0.85), y }] });
+  for (const fraction of [0.7, 0.55, 0.4, 0.25, 0.15]) {
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: xAt(fraction), y }] });
+    await page.waitForTimeout(30);
+  }
   await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
   await expect.poll(() => track.evaluate(el => Math.round(el.scrollLeft / el.clientWidth))).toBe(1);
   await expect(dots.nth(1)).toHaveAttribute('aria-current', 'true');
