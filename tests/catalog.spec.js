@@ -27,6 +27,7 @@ test('catalog category filters hide and show the correct dresses', async ({ page
 
 
 test('dress photos use a horizontal carousel with working pagination dots', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('https://chbvghbvj.github.io/yana-atelier/dress.html?slug=siyana', { waitUntil: 'networkidle' });
   const track = page.locator('#galleryTrack');
   const dots = page.locator('.gallery-dot');
