@@ -7,14 +7,66 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--paper:#f7f5f1;--ink:#171614;--muted:#77736d;--line:#d9d5ce;--accent:#9b8067}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif}a{color:inherit;text-decoration:none}.nav{height:76px;padding:0 5vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.brand{font-family:'Playfair Display',serif;font-size:22px;letter-spacing:.04em;text-transform:none}.navlinks{display:flex;gap:28px}.hero{min-height:76vh;display:grid;grid-template-columns:1.05fr .95fr;padding:28px 5vw 50px;gap:5vw;align-items:center}.hero-copy{padding:6vh 0}.eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}h1,h2,h3{font-family:'Playfair Display',serif;font-weight:400}h1{font-size:clamp(48px,7vw,100px);line-height:.98;letter-spacing:-.045em;margin:25px 0}h1 em{font-weight:400;color:var(--accent)}.intro{max-width:360px;color:var(--muted);font-size:14px;line-height:1.8}.cta{display:inline-block;margin-top:28px;padding:15px 22px;background:var(--ink);color:white;font-size:10px;letter-spacing:.14em;text-transform:uppercase}.hero-image{height:auto;min-height:0;background:transparent;position:relative;overflow:visible;display:block}.hero-image img,.hero-image video{width:100%;height:auto;max-height:none;object-fit:initial!important;object-position:initial!important;background:transparent;display:block}.placeholder{display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;color:#857b70;font-family:'Playfair Display',serif;font-size:24px;line-height:1.4}.section{padding:70px 5vw}.section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:28px}.section h2{font-size:clamp(36px,5vw,64px);margin:10px 0 0}.section-note{font-size:11px;color:var(--muted);letter-spacing:.08em}.category-filter{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 28px}.category-filter button{border:1px solid var(--line);background:transparent;color:var(--ink);padding:12px 18px;font:inherit;font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}.category-filter button[aria-pressed="true"]{background:var(--ink);color:white;border-color:var(--ink)}.product-card{display:block}.product-card[hidden]{display:none!important}.product-card.filter-hidden{display:none!important}.view-link{display:inline-block;margin-top:9px;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;font-size:9px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.product-image{height:auto;max-height:none;background:transparent;overflow:visible}.product-image img{width:100%;height:auto;display:block;object-fit:initial!important;object-position:initial!important;background:transparent}.product-info{display:flex;justify-content:space-between;gap:12px;padding:16px 0 28px}.product-name{font-family:'Playfair Display',serif;font-size:23px}.product-meta{font-size:11px;color:var(--muted);margin-top:7px}.price{font-size:12px;white-space:nowrap}.about{background:#e9e4dc;display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:center}.about h2{font-size:clamp(38px,5vw,70px);line-height:1.05}.about p{font-size:13px;line-height:1.9;color:#625c55;max-width:460px}.footer{padding:32px 5vw;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);font-size:10px;letter-spacing:.1em;text-transform:uppercase}.footer .brand{font-size:18px;text-transform:none;letter-spacing:0}
-@media(max-width:700px){.nav{height:64px;padding:0 5vw}.navlinks{gap:14px;font-size:9px}.hero{grid-template-columns:1fr;padding-top:12px;gap:0}.hero-copy{padding:7vh 0 5vh}.hero-image{height:auto;min-height:0;aspect-ratio:auto}.hero-image img,.hero-image video{height:auto;object-fit:initial!important}.section{padding:50px 5vw}.grid{gap:10px}.product-image{height:auto;max-height:none}.product-name{font-size:19px}.product-info{padding:12px 0 20px}.about{grid-template-columns:1fr;gap:10px}.footer{gap:16px;flex-wrap:wrap}}
+:root{--paper:#f7f5f1;--ink:#171614;--muted:#77736d;--line:#d9d5ce;--accent:#9b8067}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif}
+a{color:inherit;text-decoration:none}
+.nav{display:none}
+.brand{font-family:'Playfair Display',serif}
+.hero{height:100svh;min-height:620px;width:100%;position:relative;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;padding:0;margin:0;background:#e9e6e3}
+.hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%;display:block}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 36%,rgba(0,0,0,.12) 100%);pointer-events:none}
+.hero-logo{position:absolute;z-index:1;top:6.5%;left:50%;transform:translateX(-50%);width:min(72vw,680px);max-height:24vh;object-fit:contain;display:block}
+.hero-cta{position:absolute;z-index:2;bottom:7%;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;justify-content:center;min-width:220px;padding:16px 28px;background:#171614;color:#fff;font-size:11px;letter-spacing:.14em;text-transform:uppercase;text-align:center;white-space:nowrap;transition:background .2s}
+.hero-cta:hover{background:#8d7765}
+.section{padding:70px 5vw}
+.section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:28px}
+.section h2{font:400 clamp(36px,5vw,64px)/1.05 'Playfair Display',serif;margin:10px 0 0}
+.eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.section-note{font-size:11px;color:var(--muted);letter-spacing:.08em}
+.category-filter{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 28px}
+.category-filter button{border:1px solid var(--line);background:transparent;color:var(--ink);padding:12px 18px;font:inherit;font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.category-filter button[aria-pressed="true"]{background:var(--ink);color:white;border-color:var(--ink)}
+.product-card{display:block}
+.product-card[hidden],.product-card.filter-hidden{display:none!important}
+.view-link{display:inline-block;margin-top:9px;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;font-size:9px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.product-image{height:auto;max-height:none;background:transparent;overflow:visible}
+.product-image img{width:100%;height:auto;display:block;object-fit:initial!important;object-position:initial!important;background:transparent}
+.product-info{display:flex;justify-content:space-between;gap:12px;padding:16px 0 28px}
+.product-name{font:23px 'Playfair Display',serif}
+.product-meta{font-size:11px;color:var(--muted);margin-top:7px}
+.price{font-size:12px;white-space:nowrap}
+.about{background:#e9e4dc;display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:center}
+.about h2{font:400 clamp(38px,5vw,70px)/1.05 'Playfair Display',serif}
+.about p{font-size:13px;line-height:1.9;color:#625c55;max-width:460px}
+.cta{display:inline-block;margin-top:28px;padding:15px 22px;background:var(--ink);color:white;font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.footer{padding:32px 5vw;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.footer .brand{font-size:18px;letter-spacing:0}
+@media(min-width:1000px){.hero-photo{object-position:center 45%}.hero-logo{width:min(58vw,720px);top:5.5%}}
+@media(max-width:700px){
+ .hero{height:100svh;min-height:560px}
+ .hero-photo{object-position:center center}
+ .hero-logo{top:7%;width:84vw;max-height:18vh}
+ .hero-cta{bottom:6%;min-width:205px;padding:15px 22px;font-size:10px}
+ .section{padding:50px 5vw}
+ .grid{gap:10px}
+ .product-name{font-size:19px}
+ .product-info{padding:12px 0 20px}
+ .about{grid-template-columns:1fr;gap:10px}
+ .footer{gap:16px;flex-wrap:wrap}
+}
 </style>
 </head>
 <body>
-<header class="nav"><a class="brand" href="#top">Yana Atelier</a><nav class="navlinks"><a href="#collection">Колекция</a><a href="#atelier">Ателието</a><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Запиши час ↗</a></nav></header>
+
 <main id="top">
-<section class="hero"><div class="hero-copy"><div class="eyebrow">Пловдив · Индивидуален дизайн</div><h1>Роклята,<br>която е <em>твоя.</em></h1><p class="intro">Вечерни и абитуриентски рокли, създадени по твоите мерки. Силует, детайл и движение — с внимание към всяка линия.</p><a class="cta" href="#collection">Разгледай колекцията</a></div><div class="hero-image" id="heroMedia"><img src="media/hf_20261103_151821_ee135b38-57e1-461d-8a06-3f6a531381bc-1.png" alt="Yana Atelier — Сияна"></div></section>
+<section class="hero" aria-label="Yana Atelier — вечерни рокли">
+<img class="hero-photo" src="media/hero-home.png" alt="Модели на Yana Atelier">
+<img class="hero-logo" src="media/yana-atelier-logo.png" alt="Yana Atelier evening couture">
+<a class="hero-cta" href="#collection">Разгледай колекцията</a>
+</section>
 <section class="section" id="collection"><div class="section-head"><div><div class="eyebrow">Подбрани модели</div><h2>Колекция</h2></div><div class="section-note">Индивидуална изработка</div></div>
 <div class="category-filter" id="categoryFilter" aria-label="Категории рокли"><button type="button" data-category="all" aria-pressed="true">Всички рокли</button><button type="button" data-category="short" aria-pressed="false">Коктейлни рокли</button><button type="button" data-category="prom" aria-pressed="false">Официални рокли</button></div><div class="grid" id="dressGrid"><p class="section-note">Колекцията се зарежда…</p></div><p class="section-note">Допълнителна панделка към модел „Сияна“ — 100 €.</p></section>
 <section class="section about" id="atelier"><div><div class="eyebrow">Yana Atelier · Plovdiv</div><h2>Създадена<br>за твоя момент.</h2></div><div><p>В Yana Atelier всяка рокля се изработва индивидуално — с внимание към пропорциите, материалите и детайлите. За абитуриентски бал, специална вечер или събитие, което заслужава нещо лично.</p><a class="cta" href="https://www.instagram.com/" target="_blank" rel="noreferrer">Запиши час за консултация</a></div></section>
