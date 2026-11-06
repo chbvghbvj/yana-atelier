@@ -40,12 +40,12 @@
    const finishSwipe=()=>{
     if(!startTimeValid())return;
     if(dragging){
-     const distance=track.scrollLeft-startScroll;
+     const distance=startX-lastX;
      const elapsed=Math.max(1,performance.now()-lastTime);
-     const velocity=(startX-lastX)/elapsed;
-     let index=Math.round(startScroll/track.clientWidth);
-     if(Math.abs(distance)>track.clientWidth*.12||Math.abs(velocity)>.35)index=Math.round((startScroll+distance)/track.clientWidth);
-     else index=Math.round(track.scrollLeft/track.clientWidth);
+     const velocity=distance/elapsed;
+     const startIndex=Math.round(startScroll/track.clientWidth);
+     let index=Math.round(track.scrollLeft/track.clientWidth);
+     if(Math.abs(distance)>track.clientWidth*.12||Math.abs(velocity)>.35)index=startIndex+(distance>0?1:-1);
      index=Math.max(0,Math.min(dotButtons.length-1,index));
      track.classList.remove('is-dragging');
      track.scrollTo({left:index*track.clientWidth,behavior:'smooth'});
