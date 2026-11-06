@@ -1,9 +1,7 @@
-name: Published catalog browser test
+name: Catalog browser test
 
 on:
-  workflow_run:
-    workflows: ["pages build and deployment"]
-    types: [completed]
+  push:
     branches: [main]
   workflow_dispatch:
 
@@ -12,11 +10,10 @@ permissions:
 
 jobs:
   browser-test:
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Check out test
+      - name: Check out repository
         uses: actions/checkout@v4
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -26,19 +23,17 @@ jobs:
         run: npm install --no-save @playwright/test
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
-      - name: Wait for GitHub Pages
+      - name: Wait for published catalog
         run: |
-          for attempt in $(seq 1 24); do
-            if curl -fsS https://chbvghbvj.github.io/yana-atelier/ -o /tmp/site.html; then
-              if grep -q 'categoryFilter' /tmp/site.html; then
-                echo "Published page is responding."
-                exit 0
-              fi
+          for attempt in $(seq 1 30); do
+            if curl -fsS https://chbvghbvj.github.io/yana-atelier/ -o /tmp/site.html && grep -q 'categoryFilter' /tmp/site.html; then
+              echo "Published catalog is responding."
+              exit 0
             fi
-            echo "Waiting for published page ($attempt/24)..."
+            echo "Waiting for GitHub Pages ($attempt/30)..."
             sleep 10
           done
-          echo "Published page did not become available."
+          echo "Published catalog did not respond in time."
           exit 1
-      - name: Run browser test
+      - name: Run category filter test
         run: npx playwright test tests/catalog.spec.js --reporter=line
