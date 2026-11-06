@@ -41,16 +41,23 @@ test('dress photos use a horizontal carousel with working pagination dots', asyn
   await expect(dots.nth(2)).toHaveAttribute('aria-current', 'true');
 
   await dots.nth(0).click();
-  await track.evaluate(el => {
-    const rect = el.getBoundingClientRect();
-    const init = (type, x) => new PointerEvent(type, {
-      bubbles: true, cancelable: true, pointerId: 7, pointerType: 'touch',
-      isPrimary: true, clientX: x, clientY: rect.top + rect.height / 2
-    });
-    el.dispatchEvent(init('pointerdown', rect.left + rect.width * 0.8));
-    el.dispatchEvent(init('pointermove', rect.left + rect.width * 0.2));
-    el.dispatchEvent(init('pointerup', rect.left + rect.width * 0.2));
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 1 });
+  const rect = await track.evaluate(el => {
+    const r = el.getBoundingClientRect();
+    return { left: r.left, top: r.top, width: r.width, height: r.height };
   });
+  const y = rect.top + rect.height / 2;
+  await cdp.send('Input.dispatchTouchEvent', {
+    type: 'touchStart',
+    touchPoints: [{ x: rect.left + rect.width * 0.8, y }]
+  });
+  await cdp.send('Input.dispatchTouchEvent', {
+    type: 'touchMove',
+    touchPoints: [{ x: rect.left + rect.width * 0.2, y }]
+  });
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
   await expect.poll(() => track.evaluate(el => Math.round(el.scrollLeft / el.clientWidth))).toBe(1);
   await expect(dots.nth(1)).toHaveAttribute('aria-current', 'true');
+  await cdp.detach();
 });
