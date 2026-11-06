@@ -41,7 +41,10 @@
   function applyCategory(category){
    filterButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.category===category)));
    grid.querySelectorAll('.product-card').forEach(card=>{
-    card.hidden=category!=='all'&&card.dataset.category!==category;
+    const visible=category==='all'||card.dataset.category===category;
+    card.hidden=!visible;
+    if(visible){card.style.removeProperty('display');}
+    else{card.style.setProperty('display','none','important');}
    });
   }
   filterButtons.forEach(button=>button.addEventListener('click',()=>applyCategory(button.dataset.category)));
