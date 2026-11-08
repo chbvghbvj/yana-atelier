@@ -75,12 +75,16 @@ a{color:inherit;text-decoration:none}
 
 <script>
 (async function(){
+ // Удаляем устаревшее объявление о дополнительной ленте с главной страницы.
+ document.querySelectorAll('body *').forEach(el=>{
+  if(el.children.length===0 && el.textContent.includes('Допълнителна панделка към модел')) el.remove();
+ });
  const grid=document.getElementById('dressGrid');
  const base=location.pathname.indexOf('/yana-atelier/')===0?'/yana-atelier/':'/';
  const asset=function(path){return base+String(path||'').replace(/^\/+/, '').split('/').map(encodeURIComponent).join('/')};
  const esc=function(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))};
  try{
-  const response=await fetch(base+'content/catalog.json');
+  const response=await fetch(base+'content/catalog.json',{cache:'no-store'});
   if(!response.ok) throw new Error('catalog');
   const data=await response.json();
   const items=(data.dresses||[]).filter(d=>d.published!==false);
