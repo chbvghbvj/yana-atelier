@@ -34,8 +34,8 @@ test('Evelina MAXI opens its own two photos, not regular Evelina photos', async 
   await expect(page.locator('h1')).toHaveText('Evelina MAXI');
   const photos = page.locator('#galleryTrack .gallery-slide img');
   await expect(photos).toHaveCount(2);
-  await expect(photos.nth(0)).toHaveAttribute('src', /media\\/evelina\\.maxi1\\.png$/);
-  await expect(photos.nth(1)).toHaveAttribute('src', /media\\/evelina-maxi2\\.png$/);
+  await expect(photos.nth(0)).toHaveAttribute('src', /evelina[.]maxi1[.]png$/);
+  await expect(photos.nth(1)).toHaveAttribute('src', /evelina-maxi2[.]png$/);
   await expect.poll(() => photos.nth(0).evaluate(img => img.naturalWidth)).toBeGreaterThan(0);
   await expect.poll(() => photos.nth(1).evaluate(img => img.naturalWidth)).toBeGreaterThan(0);
 });
