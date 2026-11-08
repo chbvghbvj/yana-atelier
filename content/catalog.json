@@ -16,7 +16,8 @@
         "/media/sp102999.jpg"
       ],
       "published": true,
-      "featured": true
+      "featured": true,
+      "relatedDressSlug": "Siyana-Couture"
     },
     {
       "name": "Kameliya mini",
@@ -46,7 +47,8 @@
       "gallery": [
         "/media/1793811626392-hf_20261104_132639_6c9ac900-d95c-49ef-966f-3ad6222e28ef.png.jpg",
         "/media/1793811628412-hf_20261104_132232_ce67dcff-1471-4e5f-9220-f715a659d01a.png.jpg"
-      ]
+      ],
+      "relatedDressSlug": "Sia-Couture"
     },
     {
       "published": true,
@@ -61,7 +63,8 @@
       "gallery": [
         "/media/1794122997121-hf_20261104_132639_6c9ac900-d95c-49ef-966f-3ad6222e28ef-1-.png.jpg",
         "/media/1794122999700-hf_20261104_132519_4e946155-d2dc-4274-bb83-5eff4e2283c6-1-.png.jpg"
-      ]
+      ],
+      "relatedDressSlug": "sia-mini"
     },
     {
       "published": true,
@@ -75,7 +78,8 @@
       "image": "/media/1794132993581-hf_20261104_131907_579a0558-07e8-4450-a8bb-d5271f02a8cb.png.jpg",
       "gallery": [
         "/media/1794132996640-_DSC2037.jpeg.jpg"
-      ]
+      ],
+      "relatedDressSlug": "AMALIA-COUTURE"
     },
     {
       "published": true,
@@ -92,7 +96,8 @@
         "/media/1794134810791-_DSC2037.jpeg.jpg",
         "/media/1794134812840-_DSC2077.jpeg.jpg"
       ],
-      "image": "/media/1794134807850-hf_20261108_102619_629c9fcc-dff7-493d-b06f-1d360138070a.png.jpg"
+      "image": "/media/1794134807850-hf_20261108_102619_629c9fcc-dff7-493d-b06f-1d360138070a.png.jpg",
+      "relatedDressSlug": "AMALIA-MINI"
     },
     {
       "published": true,
@@ -135,7 +140,8 @@
       "gallery": [
         "/media/1794141406110-_DSC2238.jpeg.jpg",
         "/media/1794141409268-_DSC2239.jpeg.jpg"
-      ]
+      ],
+      "relatedDressSlug": "Seline-Couture"
     },
     {
       "published": true,
@@ -150,7 +156,8 @@
       "gallery": [
         "/media/1794141697093-_DSC2239.jpeg.jpg",
         "/media/1794141700370-_DSC2294.jpeg.jpg"
-      ]
+      ],
+      "relatedDressSlug": "Celine-mini"
     },
     {
       "published": true,
@@ -164,7 +171,8 @@
       "image": "/media/1794142863360-hf_20261108_125327_7be37bc7-9580-4cec-9576-d76c089be838.png.jpg",
       "gallery": [
         "/media/1794142866487-hf_20261108_125529_a688a244-2605-44a3-ac72-224d38e9fb65.png.jpg"
-      ]
+      ],
+      "relatedDressSlug": "siyana"
     },
     {
       "published": true,
@@ -195,7 +203,8 @@
         "/media/1794144721584-_DSC2377.jpeg.jpg",
         "/media/1794144724699-_DSC2388.jpeg.jpg",
         "/media/1794144727486-_DSC2401.jpeg.jpg"
-      ]
+      ],
+      "relatedDressSlug": "crystal-mini"
     },
     {
       "published": true,
@@ -210,7 +219,8 @@
       "gallery": [
         "/media/1794144919761-_DSC2323.jpeg.jpg",
         "/media/1794144922480-_DSC2335.jpeg.jpg"
-      ]
+      ],
+      "relatedDressSlug": "Crystal-Couture"
     },
     {
       "published": true,
@@ -224,7 +234,8 @@
       "image": "/media/1794157943567-_DSC2475.jpeg.jpg",
       "gallery": [
         "/media/1794157946604-_DSC2459.jpeg.jpg"
-      ]
+      ],
+      "relatedDressSlug": "Rouge-Couture"
     },
     {
       "published": true,
@@ -241,7 +252,8 @@
         "/media/1794158596827-_DSC2516.jpeg.jpg",
         "/media/1794158599801-_DSC2534.jpeg.jpg",
         "/media/1794158602708-Untitled.png.jpg"
-      ]
+      ],
+      "relatedDressSlug": "rouge mini"
     },
     {
       "published": true,
